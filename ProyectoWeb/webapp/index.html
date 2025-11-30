@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gestión de Usuarios</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" novalidate>
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+           
+            <span id="errorMsg" class="error"></span>
+        </form>
+    </div>
+
+    <script>
+     
+        function mostrarErrorLogin(msg, timeout = 0) {
+            const errorSpan = document.getElementById('errorMsg');
+            if (!errorSpan) { alert(msg); return; }
+            errorSpan.textContent = msg || '';
+            errorSpan.style.display = msg ? 'inline-block' : 'none';
+
+            
+            if (timeout > 0 && msg) {
+                setTimeout(() => {
+                    errorSpan.textContent = '';
+                    errorSpan.style.display = 'none';
+                }, timeout);
+            }
+        }
+
+       
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            mostrarErrorLogin('');
+
+            if (!email || !password) {
+                mostrarErrorLogin('Por favor ingrese correo y contraseña');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    mostrarErrorLogin(data.message || 'Credenciales incorrectas');
+                }
+            } catch (err) {
+                console.error(err);
+                mostrarErrorLogin('Error de conexión');
+            }
+        }
+
+      
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        });
+    </script>
+</body>
+
+</html>

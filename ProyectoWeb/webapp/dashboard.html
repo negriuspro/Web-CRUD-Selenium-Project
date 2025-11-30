@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestión de Usuarios</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container dashboard-container">
+        <header>
+            <h1>Panel de Usuarios</h1>
+            <button id="logoutBtn">Cerrar sesión</button>
+        </header>
+
+        
+        <span id="crudSuccessMsg" class="success"></span>
+        <span id="crudErrorMsg" class="error"></span>
+
+     
+        <form id="userForm">
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+            <input type="email" id="correo" placeholder="Correo electrónico" required>
+            <div style="position:relative; margin-bottom:10px;">
+                <input type="password" id="passwordUser" placeholder="Contraseña">
+                <button type="button" id="togglePassword" style="position:absolute; right:5px; top:0;">Mostrar</button>
+            </div>
+            <button type="submit" id="submitBtn">Crear Usuario</button>
+        </form>
+
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                
+            </tbody>
+        </table>
+
+        <div id="deleteConfirm"
+            style="display:none; margin-top:10px; padding:10px; border:1px solid red; background:#ffe6e6;">
+            <span id="deleteMsg"></span>
+            <button id="confirmDeleteBtn" class="danger">Sí</button>
+            <button id="cancelDeleteBtn" class="secondary">No</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
